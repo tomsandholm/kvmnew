@@ -6,6 +6,9 @@ This tool will use libvirt and virt-install to provision kvm nodes on Linux.
 This code was built and tested on Ubuntu 18.04.
 The base images are downloaded from Ubuntu cloud using img files.
 The images are configured via cloud-init and a generated cdrom iso.
+NOTE:  you currently have to run as root, due to permissions in the /var/lib/kvmbld directory.
+       there may be other permission issues as related to virt-install. YMMV
+       
 
 Variables:
 key variables are:
