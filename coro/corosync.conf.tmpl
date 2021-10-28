@@ -1,0 +1,69 @@
+totem {
+  version: 2
+  # How long before token lost in ms
+  token: 3000
+
+  # How many token retrans before new config
+  token_retransmits_before_lost_const: 10
+
+  # How long to wait for join msgs (ms)
+  join: 60
+
+  consensus: 3600
+
+  vsftype: none
+  
+  max_messages: 20
+
+  clear_node_high_bit: yes
+  
+  secauth: off
+
+  threads: 0
+
+  cluster_name: lbcluster
+
+  rrp_mode: none
+  interface {
+    ringnumber: 0
+    bindnetaddr: <PRIMARY>
+    mcastaddr: 226.94.1.1
+    mcastport: 5405
+  }
+}
+
+amf {
+  mode: disabled
+}
+
+quorum {
+  provider: corosync_votequorum
+  #two_node: 1
+  expected_votes: 1
+}
+
+aisexec {
+  user: root
+  group: root
+}
+
+nodelist {
+  node {
+    ring0_addr: <PRIMARY>
+    name: slave1
+    nodeid: 1
+  }
+  node {
+    ring0_addr: <SECONDARY>
+    name: slave2
+    nodeid: 2
+  }
+}
+
+logging {
+  to_logfile: yes
+  logfile: /var/log/corosync/corosync.log
+  to_syslog: yes
+  timestamp: on
+}
+

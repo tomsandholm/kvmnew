@@ -1,0 +1,12 @@
+#! /bin/bash
+# vi:set nu ai ap smd showmatch aw tabstop=4 shiftwidth=4:
+
+pvcreate /dev/vdc
+vgcreate vgweb /dev/vdc
+lvcreate --name lvweb -l 100%FREE vgweb
+mke2fs -j /dev/mapper/vgweb-lvweb
+echo "/dev/mapper/vgweb-lvweb /var/www/html defaults 1  1" >> /etc/fstab
+mount -av
+apt-get update
+apt-get install -y apache2
+exit 0

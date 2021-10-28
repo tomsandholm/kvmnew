@@ -1,0 +1,7 @@
+bootcmd:
+ - mkswap /dev/vdb
+ - swapon /dev/vdb
+ - pvcreate /dev/vdc
+ - vgcreate git /dev/vdc
+ - lvcreate --name git -l 100%FREE git
+ - mke2fs -j /dev/git/git

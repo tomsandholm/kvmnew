@@ -1,0 +1,19 @@
+# packages-general
+packages:
+  - python3
+  - lsof
+  - netcat
+  - xinetd
+  - zip
+  - apache2
+  - libapache2-mod-php
+  - php-mbstring
+  - php-xmlrpc
+  - php-soap
+  - php-gd
+  - php-xml
+  - php-cli
+  - php-zip
+  - php-mysql
+  - php-curl
+  - mariadb-server

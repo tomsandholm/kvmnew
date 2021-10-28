@@ -1,0 +1,11 @@
+runcmd:
+  - echo '{{ ds.meta_data.role }}' > /etc/role
+  - echo '{{ ds.meta_data.aenv }}' > /etc/aenv
+  - update-grub
+  - sudo apt-get update
+  - apt autoremove -y
+  - touch /etc/cloud/cloud-init.disabled
+  - eject
+  - mkdir /home/jenkins/.ssh
+  - chown jenkins:jenkins /home/jenkins/.ssh
+  - shutdown -h now

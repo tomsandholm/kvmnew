@@ -1,0 +1,60 @@
+#! /bin/bash 
+# vi:set nu ai ap aw smd showmatch tabstop=4 shiftwidth=4:
+
+## load data
+
+OIFS=$IFS
+IFS='
+'
+for 
+lines=($(<hugedata))
+
+
+IFS=$OIFS
+
+count=100000
+out="./output"
+max=1000000
+
+function doit() {
+	set -uvx
+	x=( $(shuf -i 1-999999 -n 10) )
+	((c=0))
+	z=( )
+	for y in ${x[@]}
+	do
+		val=$(sed -n ${y}p hugedata)
+		echo "$val"
+		z[$c]=$val
+		((c++))
+	done
+	echo "${z[@]}"
+}
+
+		
+
+function First() {
+	x=$(shuf -i 1-99999 -n 1)
+	set ${lines[$x]}
+	echo $1
+}
+
+function Last() {
+	x=$(shuf -i 1-99999 -n 1)
+	set ${lines[$x]}
+	echo $2
+}
+
+
+echo "Lines: ${#lines[*]}"
+
+doit
+
+#for ((i=0; i < $max;i++))
+#do
+	
+	#a=$(First)
+	#b=$(Last)
+	#echo "$a $b" >> $out
+	#echo "$i"
+#done

@@ -1,0 +1,47 @@
+#! /bin/bash 
+
+## load data
+
+lines=($(<output))
+
+count=100000
+out="./output"
+
+lines=$(wc -l hugedata)
+
+function First() {
+	num=( $(shuf -i 1-10000 -n 10) )
+	for ((i=0;i< 10;i++))
+	do
+		sed -n "${num}p" hugedata | cut -d' ' -f1
+	done
+}
+
+function Last() {
+	num=$(shuf -i 1-10000 -n 1)
+	sed -n "${num}p" hugedata | cut -d' ' -f2
+}
+
+function GetName() {
+	first=( $(shuf -i 1-10000 -n 10) )
+	last=( $(shuf -i 1-10000 -n 10) )
+	fname=($(sed -n -e "${first[0]}p" -e "${first[1]}p" -e "${first[2]}p" -e "${first[3]}p" -e "${first[4]}p" -e "${first[5]}p" -e "${first[6]}p" -e "${first[7]}p" -e "${first[8]}p" -e "${first[9]}p" hugedata | cut -d' ' -f1) )
+	lname=($(sed -n -e "${last[0]}p" -e "${last[1]}p" -e "${last[2]}p" -e "${last[3]}p" -e "${last[4]}p" -e "${last[5]}p" -e "${last[6]}p" -e "${last[7]}p" -e "${last[8]}p" -e "${last[9]}p" hugedata | cut -d' ' -f2) )
+	for((i=0;i<10;i++))
+	do
+		echo "${fname[$i]} $lname[$i]}"
+	done
+
+}
+
+
+> out
+
+((c=0))
+(( max=$count/10 ))
+while [ $c -lt $max ]
+do
+	echo "$c"
+	GetName
+	((c++))
+done

@@ -1,0 +1,11 @@
+# packages-k8
+packages:
+  - python3
+  - lsof
+  - netcat
+  - xinetd
+  - zip
+  - kubeadm
+  - kubelet
+  - kubectl
+  - docker-ce

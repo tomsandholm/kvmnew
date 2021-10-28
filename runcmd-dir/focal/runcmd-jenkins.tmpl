@@ -1,0 +1,20 @@
+runcmd:
+  - echo '{{ ds.meta_data.role }}' > /etc/role
+  - echo '{{ ds.meta_data.aenv }}' > /etc/aenv
+  - update-grub
+  - sudo apt-get update
+  - apt autoremove -y
+  - apt-get install -y jenkins
+  - systemctl enable jenkins
+  - touch /etc/cloud/cloud-init.disabled
+  - git clone https://opendev.org/jjb/jenkins-job-builder.git
+  - cd jenkins-job-builder
+  - python setup.py install
+  - pip install pbr
+  - mkdir -p /var/lib/jenkins/.ssh
+  - cp /root/.ssh/id_rsa /var/lib/jenkins/.ssh/id_rsa
+  - cp /root/.ssh/id_rsa.pub /var/lib/jenkins/.ssh/id_rsa.pub
+  - cp /root/.ssh/authorized_keys /var/lib/jenkins/.ssh/authorized_keys
+  - chown -R jenkins:jenkins /var/lib/jenkins
+  - eject
+  - shutdown -h now

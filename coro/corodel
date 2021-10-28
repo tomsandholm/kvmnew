@@ -1,0 +1,8 @@
+#! /bin/bash
+# vi:set nu ai ap smd showmatch tabstop=4 shiftwidth=4:
+
+for x in slave1 slave2 slave 3
+do
+	make -e NAME=${x}.tsand.org Delete
+done
+

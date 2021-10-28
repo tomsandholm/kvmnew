@@ -1,0 +1,29 @@
+#! /bin/bash 
+# vi:set nu ai ap aw smd showmatch tabstop=4 shiftwidth=4:
+
+subdirs="bootcmd-dir mounts-dir network-dir packages-dir runcmd-dir user-data-dir"
+
+if [ $# -ne 2 ]
+then
+	echo "Usage: new-role distro rolename"
+	exit 1
+fi
+
+distro=$1
+rolename=$2
+
+if egrep "^${distro};.*$" ./distro > /dev/null
+then	
+	:
+else
+	echo "bad distro name"
+	exit 1
+fi
+
+for target in $subdirs
+do
+	echo "Z
+
+
+
+

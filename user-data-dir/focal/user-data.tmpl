@@ -1,0 +1,94 @@
+## template: jinja
+#cloud-config
+disable_root: 0
+ssh_pwauth: 1
+
+write_files:
+  - path: /etc/tom
+    content: |
+      This is data from the installation.
+      This is another line.
+    owner: root:root
+    permissions: '0600'
+  - path: /root/.ssh/id_rsa
+    content: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEpAIBAAKCAQEAryIUunKIWoWTdWnpXdRMs8TUnYypu8hPz/BBtA/RhJtD1Le2
+      eeCtNPXWPv/Vjy8yPNetwmjyktl+1yElH8jqbxrvQa7GFa2bUpzrlfWu/c7U+l7M
+      tsOHj0sr6vwv57k6f9Yb/1h4aHaGqXgHr84TplUGFN+aLsMIN3thwQeisSFjFF/i
+      8Mk1nmeE1Up9DlqG5rA46N1rJ2qUrMVAxTD8UaO9DfJ7b3a0nPY4Y7n85FbTKOme
+      v0i1m7qCymjwcjDBsW6UUO2CteGJrmuNsvyxKKJGCUYNGYltLNAyvYKXjayfqrxC
+      /DKyXoPv9kJheYLbr+iXMqPEEw+klbQVQXa/eQIDAQABAoIBAEDGqkQL+MMChPf4
+      pIg/7d7P/pQHYwBBpsOSabrf3u7dPsl+6c9KesYL56KFncfH/Rzj6TDvAEmwiGmp
+      qMGI3q0ZmUUCD+IUxE5aHAjrRj46MiwoxC8VQx6M/0F65X0f1bNSzigz4NVCgaxM
+      6QrtffcXm5g83BpPqMpcqFttJ4+73IHAZbfWx0JMzDWswzHG9HlvW7watRU0Y/co
+      Ydra0TY1dhXc+R9/Td1L6il3RX15/Wx6fe74AGEzb6oaH+7y2CK8nZwzUJ260IOr
+      4iN/r5AkThlDG8U2LjDwAIrim9nWDDotvRTKhAZhvFix+LOaU0UwlaN836Vcew5D
+      ivh5GMECgYEA5Jc90rpMFxlJSp9/K/7YN+uAJG1u7HQhBeZDjYA4WS0PjqL2MyYU
+      hsOQYYbsnnEkgI6V+yfwPVBE2A9MMkShi1/Rb4JKm6wLK8ISbV10fBFgy7eVDeHp
+      PpxlPNws4j81IZ+Jxb9kTvsUDrToG/T4BMhXOfMjQpOWfeqRGwq1KPMCgYEAxCHr
+      ESPE8aUuS8HzRT9kKiPe6p+xkPNmBJltqnLMk2rNgO2Sg3dBmCvsmqZgY86eWk61
+      36WlXHxA795TN2hVhCiAlUCvnABsRJe6kIqSUExGDwtiXpnzHRWXN39Lf5wB0gXa
+      i2elZxiwOzW2AuHJHo5OrElGrsKZFVHDPSu60OMCgYEAtx5BNFJxKf/jqpfitEfO
+      xd0uJgBUX68X1TYE35HbkfR7BfSd7ZOP1fVL8BS58KMKbsHKfAwec7+dpsd6brpz
+      /safbAif490Khd9OC7ZV3h29wPQrv5c91h5LK1nlysh/s5OuNm9/15VjF/TsC5lO
+      JeanmZCgqnC4md4Sp+sH/OkCgYEAhLI+DBabRLJxJChQouVEq44hX7QzutIyj6IO
+      pGePKZ308+nIWtHwuzfcmLVAOcatNIRUYL/9pRkcBi3xN2eLlCKi/FgLeAyBM9dE
+      Dk7ytwkjzUHyh/a4mVDmQlIJjojKYoI7Xl39dkcp1KV+Q2znWZkGeWIKRGq8j8QF
+      x/kyJ+kCgYAsP/utAnO+vzujYlxz5QjFzZe3JZbqnM0+TylURYlFW8nKkzmZ9j8W
+      zoJyt2NUfDSvD8NlV8TJXDNerIMyMnzStM/CsDWShMXCRD2Hpc7pd6ttsbMzwXVv
+      AABOXtEsB8BkB6usW9r5r1+LN0EJ5XwJvqZCdOfYCLAqiQtSz9movg==
+      -----END RSA PRIVATE KEY-----
+    owner: root:root
+    permissions: '0600'
+  - path: /root/.ssh/id_rsa.pub
+    content: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvIhS6cohahZN1aeld1EyzxNSdjKm7yE/P8EG0D9GEm0PUt7Z54K009dY+/9WPLzI8163CaPKS2X7XISUfyOpvGu9BrsYVrZtSnOuV9a79ztT6Xsy2w4ePSyvq/C/nuTp/1hv/WHhodoapeAevzhOmVQYU35ouwwg3e2HBB6KxIWMUX+LwyTWeZ4TVSn0OWobmsDjo3WsnapSsxUDFMPxRo70N8ntvdrSc9jhjufzkVtMo6Z6/SLWbuoLKaPByMMGxbpRQ7YK14Ymua42y/LEookYJRg0ZiW0s0DK9gpeNrJ+qvEL8MrJeg+/2QmF5gtuv6Jcyo8QTD6SVtBVBdr95 sandholm@beast4
+    owner: root:root
+    permissions: '0644' 
+  - path: /root/.ssh/authorized_keys
+    content: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvIhS6cohahZN1aeld1EyzxNSdjKm7yE/P8EG0D9GEm0PUt7Z54K009dY+/9WPLzI8163CaPKS2X7XISUfyOpvGu9BrsYVrZtSnOuV9a79ztT6Xsy2w4ePSyvq/C/nuTp/1hv/WHhodoapeAevzhOmVQYU35ouwwg3e2HBB6KxIWMUX+LwyTWeZ4TVSn0OWobmsDjo3WsnapSsxUDFMPxRo70N8ntvdrSc9jhjufzkVtMo6Z6/SLWbuoLKaPByMMGxbpRQ7YK14Ymua42y/LEookYJRg0ZiW0s0DK9gpeNrJ+qvEL8MrJeg+/2QmF5gtuv6Jcyo8QTD6SVtBVBdr95 sandholm@beast4
+    owner: root:root
+    permissions: '0644' 
+
+#MOUNTS
+
+#PACKAGES
+
+#BOOTCMD
+
+#APT
+
+ntp:
+  enabled: true
+  ntp_client: ntp
+
+chpasswd:
+  list: |
+    root:$1$xyz$quBhc72d/1S/7c2IIRk7k1
+  expire: False
+
+manage_etc_hosts: false
+
+package_upgrade: true
+
+#ssh_pwauth: True
+
+users:
+  - name: ubuntu
+    ssh-authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvIhS6cohahZN1aeld1EyzxNSdjKm7yE/P8EG0D9GEm0PUt7Z54K009dY+/9WPLzI8163CaPKS2X7XISUfyOpvGu9BrsYVrZtSnOuV9a79ztT6Xsy2w4ePSyvq/C/nuTp/1hv/WHhodoapeAevzhOmVQYU35ouwwg3e2HBB6KxIWMUX+LwyTWeZ4TVSn0OWobmsDjo3WsnapSsxUDFMPxRo70N8ntvdrSc9jhjufzkVtMo6Z6/SLWbuoLKaPByMMGxbpRQ7YK14Ymua42y/LEookYJRg0ZiW0s0DK9gpeNrJ+qvEL8MrJeg+/2QmF5gtuv6Jcyo8QTD6SVtBVBdr95 sandholm@beast4
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    shell: /bin/bash
+  - name: jenkins
+    homedir: /var/lib/jenkins
+    ssh-authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvIhS6cohahZN1aeld1EyzxNSdjKm7yE/P8EG0D9GEm0PUt7Z54K009dY+/9WPLzI8163CaPKS2X7XISUfyOpvGu9BrsYVrZtSnOuV9a79ztT6Xsy2w4ePSyvq/C/nuTp/1hv/WHhodoapeAevzhOmVQYU35ouwwg3e2HBB6KxIWMUX+LwyTWeZ4TVSn0OWobmsDjo3WsnapSsxUDFMPxRo70N8ntvdrSc9jhjufzkVtMo6Z6/SLWbuoLKaPByMMGxbpRQ7YK14Ymua42y/LEookYJRg0ZiW0s0DK9gpeNrJ+qvEL8MrJeg+/2QmF5gtuv6Jcyo8QTD6SVtBVBdr95 sandholm@beast4
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    shell: /bin/bash
+
+
+#RUNCMD
+
+

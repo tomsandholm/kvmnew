@@ -1,0 +1,23 @@
+#! /bin/bash
+# vi:set nu ai ap aw smd showmatch tabstop=4 shiftwidth=4:
+
+PNAME=$(basename $0)
+base="slave"
+domain="tsand.org"
+count=3
+DATA=8
+
+tmpdir=$(mktemp -d /tmp/${PNAME}.XXXXXX)
+echo "tmpdir: $tmpdir"
+
+(( c=1 ))
+while (( c <= $count ))
+do
+	echo "make -e NAME=${base}${c}.${domain} DATASIZE=${DATA} ROLE=gluster node"
+	make -e NAME="${base}${c}.${domain}" DATASIZE=${DATA} ROLE=gluster node 
+	(( c++ ))
+done
+
+
+echo "all done"
+exit 0

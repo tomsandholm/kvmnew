@@ -1,0 +1,7 @@
+#! /bin/bash 
+
+sed -i '/\[mysqld\]/a\
+log-bin\
+server_id=001\
+log-basename=DB001' ./my.cnf
+

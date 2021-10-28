@@ -1,0 +1,9 @@
+# packages-jenkins
+packages:
+  - openjdk-8-jre
+  - openjdk-8-jdk
+  - python
+  - python-setuptools
+  - python-pip
+  - jenkins
+  - ansible

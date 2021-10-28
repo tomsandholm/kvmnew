@@ -1,0 +1,32 @@
+<template>
+  <name>centos7</name>
+  <os>
+    <name>CentOS-7</name>
+    <arch>x86_64</arch>
+    <install type='iso'>
+      <iso>http://mirror.rackspace.com/CentOS/7/isos/x86_64/CentOS-7-x86_64-NetInstall-1908.iso</iso>
+    </install>
+    <rootpw>theresa1</rootpw>
+  </os>
+  <description>CentOS 7 x86_64</description>
+  <repositories>
+    <repository name='epel-7'>
+      <url>http://download.fedoraproject.org/pub/epel/7/$basearch</url>
+      <signed>no</signed>
+    </repository>
+  </repositories>
+  <packages>
+    <package name='epel-release'/>
+    <package name='cloud-utils'/>
+    <package name='cloud-init'/>
+  </packages>
+  <commands>
+    <command name='update'>
+yum -y update
+yum clean all
+sed -i '/^HWADDR/d' /etc/sysconfig/network-scripts/ifcfg-eth0
+echo -n > /etc/udev/rules.d/70-persistent-net.rules
+echo -n > /lib/udev/rules.d/75-persistent-net-generator.rules
+    </command>
+  </commands>
+</template>

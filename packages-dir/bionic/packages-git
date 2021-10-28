@@ -1,0 +1,11 @@
+# packages-general
+packages:
+  - python3
+  - lsof
+  - netcat
+  - xinetd
+  - zip
+  - build-essential
+  - apache2
+  - git
+  - gitolite3

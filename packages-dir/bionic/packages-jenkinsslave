@@ -1,0 +1,7 @@
+# packages-jenkinsslave
+packages:
+  - openjdk-11-jre
+  - openjdk-11-jdk
+  - python
+  - python-setuptools
+  - python-pip

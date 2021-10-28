@@ -1,0 +1,39 @@
+#! /bin/bash
+# vi:set nu ai ap aw smd showmatch tabstop=4 shiftwidth=4:
+
+max=${1?Must specify count}
+filename=${2?Must specify filename}
+
+OIFS=$IFS
+IFS='
+'
+(( count=0 ))
+for x in $(<hugedata)
+do
+	CIFS=$IFS
+	IFS=$OIFS
+	set $x
+	IFS=$CIFS
+	first[$count]=$1
+	last[$count]=$2
+	(( count++ ))
+done
+echo "Count: $count"
+
+> $filename
+
+(( z=0 ))
+for (( x=0; x<$count; x++ ))
+do
+	for (( y=0; y<$count; y++ ))
+	do
+		echo "${first[$x]} ${last[$y]}" >> $filename
+		(( z++ ))
+		if [[ $z -gt $max ]]
+		then
+			exit 0
+		fi
+	done
+done
+
+

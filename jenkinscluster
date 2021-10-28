@@ -1,0 +1,110 @@
+#! /bin/bash
+# vi:set nu ai ap aw smd showmatch tabstop=4 shiftwidth=4:
+
+# check if nodename exists
+function nodeexists() {
+	virsh list --all |grep $1 > /dev/null && return 0
+	return 1
+}
+
+# check if nodename is running
+function noderunning() {
+	virsh list --all | grep $1 | grep -- running > /dev/null && return 0
+	return 1
+}
+
+function nodestopped() {
+	virsh list --all | grep $1 | grep -- shut > /dev/null && return 0
+	return 1
+}
+
+### create private and public keys for jenkins user
+ssh-keygen -trsa -N '' -f ./id_rsa
+cp ./id_rsa.pub ./authorized_keys
+cat /root/authorized_keys >> ./authorized_keys
+
+hosts=$(mktemp /tmp/$(basename $0).XXXXXX)
+grep jenkins /etc/hosts > $hosts
+
+make -e NAME=jenkins.tsand.org ROLE=jenkins node
+
+sleep 15
+
+echo ">>>>> shutdown jenkins"
+virsh shutdown jenkins
+echo "wait for jenkins shutdown"
+until $(nodestopped jenkins)
+do
+	echo -n '*'
+	sleep 15
+done
+echo "jenkins is now down"
+
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/id_rsa /root/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/id_rsa.pub /root/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/authorized_keys /root/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/id_rsa /var/lib/jenkins/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/id_rsa.pub /var/lib/jenkins/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/authorized_keys /var/lib/jenkins/.ssh/
+virt-copy-out -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /etc/hosts .
+cat $hosts >> ./hosts
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 hosts /etc/
+
+virsh start jenkins
+
+make -e NAME=jenkins01.tsand.org ROLE=jenkinsslave node
+
+sleep 15
+
+virsh shutdown jenkins01
+
+until $(nodestopped jenkins01)
+do
+	echo -n '*'
+	sleep 15
+done
+virt-copy-in -a /var/lib/kvmbld/images/jenkins01/rootfs.qcow2 /root/.ssh/id_rsa /root/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins01/rootfs.qcow2 /root/.ssh/id_rsa.pub /root/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins01/rootfs.qcow2 /root/.ssh/authorized_keys /root/.ssh/
+guestfish -d /var/lib/kvmbld/images/jenkins01/rootfs.qcow2 -i <<EOF
+mkdir -p /var/lib/jenkins/.ssh/
+chown -R jenkins:jenkins /var/lib/jenkins
+EOF
+virt-copy-in -a /var/lib/kvmbld/images/jenkins01/rootfs.qcow2 /root/.ssh/id_rsa /var/lib/jenkins/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/id_rsa.pub /var/lib/jenkins/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/authorized_keys /var/lib/jenkins/.ssh/
+
+virt-copy-out -a /var/lib/kvmbld/images/jenkins01/rootfs.qcow2 /etc/hosts .
+cat $hosts >> ./hosts
+virt-copy-in -a /var/lib/kvmbld/images/jenkins01/rootfs.qcow2 hosts /etc/
+virsh start jenkins01
+
+make -e NAME=jenkins02.tsand.org ROLE=jenkinsslave node
+
+sleep 15
+
+virsh shutdown jenkins02
+
+until $(nodestopped jenkins02)
+do
+	echo -n '*'
+	sleep 15
+done
+virt-copy-in -a /var/lib/kvmbld/images/jenkins02/rootfs.qcow2 /root/.ssh/id_rsa /root/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins02/rootfs.qcow2 /root/.ssh/id_rsa.pub /root/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins02/rootfs.qcow2 /root/.ssh/authorized_keys /root/.ssh/
+guestfish -d /var/lib/kvmbld/images/jenkins02/rootfs.qcow2 -i <<EOF
+mkdir -p /var/lib/jenkins/.ssh/
+chown -R jenkins:jenkins /var/lib/jenkins
+EOF
+virt-copy-in -a /var/lib/kvmbld/images/jenkins01/rootfs.qcow2 /root/.ssh/id_rsa /var/lib/jenkins/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/id_rsa.pub /var/lib/jenkins/.ssh/
+virt-copy-in -a /var/lib/kvmbld/images/jenkins/rootfs.qcow2 /root/.ssh/authorized_keys /var/lib/jenkins/.ssh/
+
+virt-copy-out -a /var/lib/kvmbld/images/jenkins02/rootfs.qcow2 /etc/hosts .
+cat $hosts >> ./hosts
+virt-copy-in -a /var/lib/kvmbld/images/jenkins02/rootfs.qcow2 hosts /etc/
+
+virsh start jenkins02
+
+exit 0

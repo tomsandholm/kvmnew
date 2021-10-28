@@ -1,0 +1,7 @@
+bootcmd:
+ - mkswap /dev/vdb
+ - swapon /dev/vdb
+ - echo 10.0.0.160 jenkins.tsand.org jenkins >> /etc/hosts
+ - echo 10.0.0.161 jenkins01.tsand.org jenkins01 >> /etc/hosts
+ - echo 10.0.0.162 jenkins02.tsand.org jenkins02 >> /etc/hosts
+ 

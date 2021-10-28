@@ -1,0 +1,9 @@
+# packages-general
+packages:
+  - python3
+  - lsof
+  - netcat
+  - xinetd
+  - zip
+  - net-tools
+  - openjdk-11-jdk

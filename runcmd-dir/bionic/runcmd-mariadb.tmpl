@@ -1,0 +1,18 @@
+runcmd:
+  - echo '{{ ds.meta_data.role }}' > /etc/role
+  - echo '{{ ds.meta_data.aenv }}' > /etc/aenv
+  - update-grub
+  - apt autoremove -y
+  - touch /etc/cloud/cloud-init.disabled
+  - mysqladmin -u root password theresa1 
+  - sed -i 's/^bind-address.*/bind-address = 0.0.0.0/g' /etc/mysql/my.cnf
+  - mysql -u root --password=theresa1 -e "use mysql; CREATE USER '{{ ds.meta_data.remuser }}'@'localhost' IDENTIFIED BY '{{ ds.meta_data.remuserpsw }}';"
+  - mysql -u root --password=theresa1 -e "use mysql; CREATE USER '{{ ds.meta_data.remuser }}'@'%' IDENTIFIED BY '{{ ds.meta_data.remuserpsw }}';"
+  - mysql -u root --password=theresa1 -e "use mysql; GRANT ALL ON *.* TO '{{ ds.meta_data.remuser }}'@'localhost';"
+  - mysql -u root --password=theresa1 -e "use mysql; GRANT REPLICATION SLAVE ON *.* TO '{{ ds.meta_data.remuser }}'@'localhost';"
+  - mysql -u root --password=theresa1 -e "use mysql; GRANT ALL ON *.* TO '{{ ds.meta_data.remuser }}'@'%';"
+  - mysql -u root --password=theresa1 -e "use mysql; GRANT REPLICATION SLAVE ON *.* TO '{{ ds.meta_data.remuser }}'@'%';"
+  - sed -i '/\[mysqld\]/alog-bin\nserver_id={{ ds.meta_data.id }}\nlog-basename={{ ds.meta_data.host }}' /etc/mysql/my.cnf
+  - systemctl
+  - eject
+  - shutdown -h now
